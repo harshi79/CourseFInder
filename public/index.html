@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CourseFinder Bot — Find 100% Free Courses Without Wasting Time</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- Top Navigation Header -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-logo">✈️</div>
+        <div>
+          <div class="brand-title">CourseFinder <span class="brand-badge">TELEGRAM FREE COURSE BOT</span></div>
+          <div class="brand-sub">Telegram Bot &amp; Live Simulator — Zero Paywalls, Zero Wasted Time</div>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" id="mainNavTabs">
+        <button class="nav-tab active" data-tab="bot">
+          <span>💬</span> Bot Chat &amp; Simulator
+        </button>
+        <button class="nav-tab" data-tab="explorer">
+          <span>🔍</span> Search &amp; Filter Courses
+        </button>
+        <button class="nav-tab" data-tab="platforms">
+          <span>🟣</span> Udemy &amp; Free Platforms Guide
+        </button>
+        <button class="nav-tab" data-tab="roadmaps">
+          <span>🗺️</span> $0 Learning Roadmaps
+        </button>
+        <button class="nav-tab" data-tab="watchlist">
+          <span>🔖</span> Saved Watchlist <span class="count-pill" id="watchlistBadge">0</span>
+        </button>
+      </nav>
+
+      <div class="bot-status-bar">
+        <button class="connect-btn" id="openConnectModalBtn" title="Connect Telegram Bot Token">
+          <span class="status-dot" id="botStatusDot"></span>
+          <span id="botStatusLabel">Telegram Bot Setup</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- ==================== TAB 1: BOT CHAT & TELEGRAM/DISCORD SIMULATOR ==================== -->
+    <section class="tab-panel active" id="tab-bot">
+      <div class="bot-layout">
+        <!-- Left Sidebar: Quick Bot Commands & Topic Starters -->
+        <aside class="bot-sidebar">
+          <div class="sidebar-card">
+            <h3>✈️ Telegram Bot Simulator</h3>
+            <p class="muted-small">Test your Telegram bot commands, inline keyboards &amp; natural chat right here:</p>
+            <div class="skin-switcher" id="skinSwitcher" style="grid-template-columns: repeat(2, 1fr);">
+              <button class="skin-btn active" data-skin="telegram">✈️ Telegram View</button>
+              <button class="skin-btn" data-skin="advisor">✨ Web Advisor</button>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>⚡ Quick Bot Commands</h3>
+            <div class="cmd-list">
+              <button class="cmd-chip" data-msg="/udemy python">
+                <code>/udemy python</code>
+                <span>Free Udemy courses + coupon guide</span>
+              </button>
+              <button class="cmd-chip" data-msg="/platforms">
+                <code>/platforms</code>
+                <span>Where free courses live &amp; audit tricks</span>
+              </button>
+              <button class="cmd-chip" data-msg="/cert">
+                <code>/cert</code>
+                <span>Courses with 100% Free Certificates</span>
+              </button>
+              <button class="cmd-chip" data-msg="/roadmap web-dev">
+                <code>/roadmap web-dev</code>
+                <span>Full-Stack Web Dev $0 path</span>
+              </button>
+              <button class="cmd-chip" data-msg="/roadmap python-ai">
+                <code>/roadmap python-ai</code>
+                <span>Python, ML &amp; GenAI $0 path</span>
+              </button>
+              <button class="cmd-chip" data-msg="/compare udemy vs coursera">
+                <code>/compare udemy vs coursera</code>
+                <span>Side-by-side platform advisor</span>
+              </button>
+              <button class="cmd-chip" data-msg="/saved">
+                <code>/saved</code>
+                <span>View your bookmarked courses</span>
+              </button>
+              <button class="cmd-chip" data-msg="/random">
+                <code>/random</code>
+                <span>Surprise high-rated free course</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>💡 Ask in Plain English</h3>
+            <div class="prompt-list">
+              <button class="prompt-btn" data-msg="Where can I find free Udemy courses or 100% off coupons without wasting time?">
+                "Where can I find free Udemy courses or 100% off coupons?"
+              </button>
+              <button class="prompt-btn" data-msg="I want to learn Python for Data Science from scratch with a free certificate">
+                "I want to learn Python for Data Science with a free certificate"
+              </button>
+              <button class="prompt-btn" data-msg="Show me short beginner courses for UI/UX design and Figma">
+                "Short beginner courses for UI/UX design and Figma"
+              </button>
+              <button class="prompt-btn" data-msg="Best free cybersecurity and ethical hacking courses with badges">
+                "Best free cybersecurity &amp; ethical hacking courses"
+              </button>
+              <button class="prompt-btn" data-msg="Free digital marketing, SEO, and Excel courses for business">
+                "Free digital marketing, SEO, and Excel courses"
+              </button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Center/Right: Interactive Bot Chat Window -->
+        <div class="chat-shell skin-telegram" id="chatShell">
+          <div class="chat-header">
+            <div class="chat-header-left">
+              <div class="chat-avatar" id="chatAvatar">✈️</div>
+              <div>
+                <div class="chat-title" id="chatHeaderTitle">@CourseFinderFreeBot (Telegram Mode)</div>
+                <div class="chat-subtitle" id="chatHeaderSub">Online · Instant Free Course Search, Udemy Filter &amp; Advisor</div>
+              </div>
+            </div>
+            <div class="chat-header-actions">
+              <button class="btn-ghost-sm" id="clearChatBtn" title="Reset conversation">🔄 Reset Chat</button>
+            </div>
+          </div>
+
+          <div class="chat-messages" id="chatMessages">
+            <!-- Populated dynamically on load -->
+          </div>
+
+          <!-- Instant Free Platform Deep-Links Bar (Updates with every topic discussed!) -->
+          <div class="live-links-strip" id="chatLiveLinksStrip">
+            <span class="strip-label">🚀 1-Click Free Search (<strong id="stripTopicLabel">python</strong>):</span>
+            <div class="strip-links" id="stripLinksContainer"></div>
+          </div>
+
+          <form class="chat-input-bar" id="chatForm">
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Describe any skill/course you want to learn free, or type /udemy, /search, /roadmap, /cert..."
+              autocomplete="off"
+            />
+            <button type="submit" class="send-btn">Send ➤</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: SEARCH & FILTER COURSES ==================== -->
+    <section class="tab-panel" id="tab-explorer">
+      <div class="explorer-hero">
+        <div>
+          <h2>🔍 Instant Free Course Search &amp; Multi-Platform Generator</h2>
+          <p>Search our curated catalog of top-rated free courses OR generate instant pre-filtered <strong>$0 search links</strong> across Udemy, Coursera, edX, Class Central &amp; YouTube for <em>any</em> keyword on earth.</p>
+        </div>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="filter-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔎</span>
+          <input
+            type="text"
+            id="explorerSearchInput"
+            placeholder="Search any keyword (e.g. Python, React, Excel, Graphic Design, Cybersecurity, C#, Guitar, Rust...)"
+          />
+          <button class="btn-primary-sm" id="explorerSearchBtn">Search</button>
+        </div>
+
+        <div class="filter-controls">
+          <select id="filterPlatform">
+            <option value="all">All Platforms</option>
+            <option value="Udemy">🟣 Udemy (Free Tier)</option>
+            <option value="Harvard">🎓 Harvard CS50 / edX</option>
+            <option value="freeCodeCamp">🔥 freeCodeCamp</option>
+            <option value="Coursera">🔵 Coursera (Audit Free)</option>
+            <option value="Kaggle">⚡ Kaggle Learn</option>
+            <option value="MIT OCW">🏛️ MIT OpenCourseWare</option>
+            <option value="YouTube">▶️ YouTube Full Courses</option>
+            <option value="Cisco">🛡️ Cisco NetAcad</option>
+            <option value="Google">🌐 Google Skillshop</option>
+            <option value="The Odin Project">⚔️ The Odin Project</option>
+            <option value="Full Stack Open">🚀 Full Stack Open</option>
+            <option value="Saylor Academy">📜 Saylor Academy</option>
+            <option value="Khan Academy">🌱 Khan Academy</option>
+          </select>
+
+          <select id="filterCategory">
+            <option value="all">All Categories</option>
+          </select>
+
+          <select id="filterLevel">
+            <option value="all">All Levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+          </select>
+
+          <label class="toggle-chip">
+            <input type="checkbox" id="filterCertOnly" />
+            <span>🏆 Free Certificate Only</span>
+          </label>
+
+          <label class="toggle-chip">
+            <input type="checkbox" id="filterShortOnly" />
+            <span>⚡ Short (&le; 10 hrs)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Live Multi-Platform Deep Links Box -->
+      <div class="direct-generator-box">
+        <div class="dg-header">
+          <div>
+            <strong>🌐 Live Pre-Filtered "100% Free" Search Links for: <span class="highlight-topic" id="explorerTopicLabel">programming</span></strong>
+            <span class="dg-sub">Click any platform below to open its search page with the FREE filter already applied — zero time wasted!</span>
+          </div>
+        </div>
+        <div class="dg-grid" id="explorerDirectLinksGrid"></div>
+      </div>
+
+      <div class="results-meta">
+        <span id="explorerCountText">Showing courses...</span>
+      </div>
+
+      <div class="course-grid" id="explorerCourseGrid"></div>
+    </section>
+
+    <!-- ==================== TAB 3: UDEMY & FREE PLATFORMS PLAYBOOK ==================== -->
+    <section class="tab-panel" id="tab-platforms">
+      <div class="udemy-spotlight">
+        <div class="udemy-spotlight-content">
+          <div class="badge-pill">🟣 TIME-SAVER PLAYBOOK</div>
+          <h2>How to Find Free Courses on Udemy &amp; Major Platforms Without Wasting Time</h2>
+          <p>Most people waste hours clicking "Free Trial" traps or expired coupons. Use our instant Udemy Free URL generator below or read the exact steps for each platform.</p>
+
+          <div class="udemy-generator-bar">
+            <input
+              type="text"
+              id="udemyQuickTopicInput"
+              placeholder="Enter any topic (e.g. python, video editing, excel, blender, AWS, spanish)..."
+              value="python"
+            />
+            <a
+              id="udemyQuickLaunchBtn"
+              href="https://www.udemy.com/courses/search/?price=price-free&q=python&sort=highest-rated"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-udemy"
+            >
+              🟣 Open Highest-Rated FREE Udemy Courses ↗
+            </a>
+            <a
+              href="https://www.udemy.com/courses/free/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-outline-light"
+            >
+              📂 Official Udemy Free Portal ↗
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="platform-guides-grid" id="platformGuidesGrid"></div>
+    </section>
+
+    <!-- ==================== TAB 4: $0 LEARNING ROADMAPS ==================== -->
+    <section class="tab-panel" id="tab-roadmaps">
+      <div class="section-intro">
+        <h2>🗺️ Step-by-Step $0 Learning Roadmaps</h2>
+        <p>Don't get stuck in tutorial hell wondering what to take first, second, and third. Pick a career goal below for a curated sequence of 100% free courses.</p>
+      </div>
+
+      <div class="roadmap-selector" id="roadmapSelector"></div>
+      <div class="roadmap-detail" id="roadmapDetailContainer"></div>
+    </section>
+
+    <!-- ==================== TAB 5: SAVED WATCHLIST ==================== -->
+    <section class="tab-panel" id="tab-watchlist">
+      <div class="section-intro">
+        <h2>🔖 Your Saved Free Course Watchlist</h2>
+        <p>Keep track of free courses you want to take, mark them as <strong>In Progress</strong> or <strong>Completed</strong>, and jump straight into learning.</p>
+      </div>
+
+      <div id="watchlistContainer" class="watchlist-container"></div>
+    </section>
+  </main>
+
+  <!-- ==================== MODAL: TELEGRAM BOT CONNECTION & BOTKEEP DEPLOY ==================== -->
+  <div class="modal-backdrop hidden" id="connectModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>✈️ Connect Live Telegram Bot &amp; Botkeep Hosting</h3>
+        <button class="modal-close" id="closeConnectModalBtn">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="muted-small">
+          CourseFinder runs as a <strong>Telegram Bot</strong> (<code>src/platforms/telegram.js</code>) powered by <code>grammy</code> and is pre-configured for 24/7 hosting on <strong>Botkeep.cloud</strong>.
+        </p>
+
+        <div class="bot-config-card" style="margin: 14px 0;">
+          <div class="bot-config-head">
+            <span>✈️ <strong>Telegram Bot Status</strong></span>
+            <span class="status-pill" id="tgModalStatus">Simulator Mode</span>
+          </div>
+          <ol class="setup-steps">
+            <li>Open Telegram, message <strong>@BotFather</strong>, and send <code>/newbot</code>.</li>
+            <li>Copy the HTTP API token and paste it below to test live right now, OR add <code>TELEGRAM_BOT_TOKEN</code> in Botkeep's <strong>Environment</strong> tab when deploying!</li>
+            <li>Open your Telegram bot and send <code>/start</code>, <code>/udemy python</code>, or describe any course you want to find!</li>
+          </ol>
+          <div class="token-form">
+            <input type="password" id="tgTokenInput" placeholder="Paste TELEGRAM_BOT_TOKEN (e.g. 123456789:ABC-DEF...)" />
+            <button class="btn-primary-sm" id="connectTgBtn">Connect Telegram Bot</button>
+          </div>
+          <div class="bot-feedback" id="tgFeedback"></div>
+        </div>
+
+        <div class="cli-hint-box">
+          <strong>☁️ Botkeep.cloud Settings:</strong>
+          Runtime: <code>Node.js</code> &nbsp;|&nbsp;
+          Start Command: <code>npm start</code> &nbsp;|&nbsp;
+          Environment Secret: <code>TELEGRAM_BOT_TOKEN</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
