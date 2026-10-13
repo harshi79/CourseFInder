@@ -341,7 +341,7 @@ function handleBotMessage(userId = 'web:default', rawMessage = '') {
       type: 'platforms',
       markdown:
         `🌐 **Where Free Courses Are Available (The No-Time-Wasted Directory)**\n` +
-        `Here are the 8 best places online to learn anything for $0 and how to bypass paywalls legitimately:\n\n` +
+        `Here are the ${PLATFORM_GUIDES.length} best places online to learn anything for $0 and how to bypass paywalls legitimately:\n\n` +
         guideSummary,
       platformGuides: PLATFORM_GUIDES,
       quickReplies: [

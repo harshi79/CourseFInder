@@ -42,7 +42,7 @@ This project is pre-configured for **Botkeep's Node.js runtime** (`SERVER_PORT`,
 2. Click **Create / Deploy Workload** and select the **Node.js** runtime profile.
 3. Choose **GitHub** as the source:
    - **Repository**: `harshi79/CourseFInder`
-   - **Branch**: `arena/24f80903-coursefinder` (or `main` once merged)
+   - **Branch**: `main` (or the `arena/...` feature branch you are deploying from)
    - **Start command**: `npm start`
 4. Open the **Environment** tab in Botkeep and add your secret:
    - `TELEGRAM_BOT_TOKEN` = *(paste your token from `@BotFather`)*
@@ -54,6 +54,42 @@ This project is pre-configured for **Botkeep's Node.js runtime** (`SERVER_PORT`,
    zip -r coursefinder-botkeep.zip package.json package-lock.json README.md src/ public/ test/
    ```
 2. In **[https://botkeep.cloud/app](https://botkeep.cloud/app)**, choose **Node.js** &rarr; **ZIP upload**, upload `coursefinder-botkeep.zip`, confirm `npm start` as the start command, set `TELEGRAM_BOT_TOKEN` in **Environment**, and click **Start**.
+
+> **ZIP deploys must include `src/data/`.** The catalog, platform playbooks and
+> roadmaps are committed JavaScript modules — if they are missing the server
+> crashes on boot with `Error: Cannot find module './data/courses'`.
+
+---
+
+## 🗂️ Project Layout
+
+```text
+src/
+├── data/            # ✅ COMMITTED content modules (Botkeep deploys from GitHub)
+│   ├── courses.js   #    67 curated 100% free / free-to-audit courses
+│   ├── platforms.js #    15 platform playbooks + buildDirectSearchLinks() (7 $0 links)
+│   └── roadmaps.js  #    6 step-by-step $0 learning paths
+├── services/        #    search + synonym engine, watchlist persistence
+├── bot/engine.js    #    conversational bot brain (Telegram + web simulator)
+├── platforms/       #    grammY Telegram binding
+└── server.js        #    Express API + static web hub (npm start)
+data/                # ⛔ gitignored RUNTIME storage (data/watchlist.json)
+```
+
+⚠️ **Do not add `data/` to `.gitignore` without a leading slash.** A bare
+`data/` rule ignores *any* directory named `data` — including `src/data/` —
+which silently drops the content modules from every GitHub deploy. The rule is
+intentionally `/data/` so only the root-level runtime store is ignored.
+`npm test` fails if `src/data/courses.js` is ever gitignored again.
+
+### ✅ Tests
+
+```bash
+npm test   # roster of bot conversations + catalog/schema/api integrity checks
+```
+
+The suite boots the real Express app, exercises every REST route, and validates
+that each roadmap step points at a course that actually exists.
 
 ---
 

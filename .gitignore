@@ -148,6 +148,6 @@ vite.config.ts.timestamp-*
 # Turbo Repo
 .turbo
 
-# Runtime watchlist storage
-data/
+# Runtime watchlist storage (root /data only — src/data/ holds the committed catalog)
+/data/
 
