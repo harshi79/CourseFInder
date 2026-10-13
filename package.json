@@ -1,0 +1,32 @@
+{
+  "name": "coursefinder",
+  "version": "1.0.0",
+  "description": "CourseFinder Telegram Bot — Find 100% free courses across Udemy, Coursera, edX, freeCodeCamp, MIT, Harvard CS50, Kaggle & more.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "bot:telegram": "node src/cli-telegram.js",
+    "test": "node --test test/bot.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshi79/CourseFInder.git"
+  },
+  "keywords": [
+    "free-courses",
+    "telegram-bot",
+    "udemy",
+    "coursera",
+    "edx",
+    "freecodecamp",
+    "course-finder"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "grammy": "^1.42.0"
+  }
+}
